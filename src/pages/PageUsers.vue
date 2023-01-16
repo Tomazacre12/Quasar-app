@@ -1,44 +1,57 @@
 <template>
-  <q-page class="flex">
-    <h5>Users page</h5>
+  <q-page class="flex q-pa-md">
+  	<q-list 
+  		class="full-width"
+  		separator>
+  	  <q-item
+  	  	v-for="user in users"
+  	  	:key="user.id"
+  	  	to="/chat"
+  	  	clickable
+  	  	v-ripple>
+  	    <q-item-section avatar>
+  	      <q-avatar color="primary" text-color="white">
+  	        {{ user.name.charAt(0) }}
+  	      </q-avatar>
+  	    </q-item-section>
+
+  	    <q-item-section>
+  	      <q-item-label>{{ user.name }}</q-item-label>
+  	    </q-item-section>
+
+  	    <q-item-section side>
+  	      <q-badge 
+  	      	:color="user.online ? 'light-green-5' : 'grey-4'">
+            {{ user.online ? 'Online' : 'Offline' }}
+          </q-badge>
+  	    </q-item-section>
+  	  </q-item>
+
+  	</q-list>
   </q-page>
 </template>
 
-<script lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
-import { defineComponent, ref } from 'vue';
-
-export default defineComponent({
-  name: 'IndexPage',
-  components: { ExampleComponent },
-  setup() {
-    const todos = ref<Todo[]>([
-      {
-        id: 1,
-        content: 'ct1'
-      },
-      {
-        id: 2,
-        content: 'ct2'
-      },
-      {
-        id: 3,
-        content: 'ct3'
-      },
-      {
-        id: 4,
-        content: 'ct4'
-      },
-      {
-        id: 5,
-        content: 'ct5'
-      }
-    ]);
-    const meta = ref<Meta>({
-      totalCount: 1200
-    });
-    return { todos, meta };
-  }
-});
+<script>
+	export default {
+	  data () {
+	    return {
+	      users: [{
+      	  id: 1,
+      	  name: 'Danny',
+      	  online: true
+      	}, {
+      	  id: 2,
+      	  name: 'Jim',
+      	  online: false
+      	}, {
+      	  id: 3,
+      	  name: 'Lucy',
+      	  online: true
+      	}]
+	    }
+	  }
+	}
 </script>
+
+<style>
+</style>

@@ -1,44 +1,77 @@
 <template>
-  <q-page class="flex">
-    <h5>Chat page</h5>
+  <q-page class="flex column">
+  	<q-banner class="bg-grey-4 text-center">
+      User is offline.
+    </q-banner>
+  	<div class="q-pa-md column col justify-end">
+  		<q-chat-message
+  			v-for="message in messages"
+  			:key="message.text"
+  		  :name="message.from"
+  		  :text="[message.text]"
+  		  :sent="message.from == 'me' ? true : false"
+  		/>
+  	</div>
+  	<q-footer elevated>
+  	  <q-toolbar>
+  	  	<q-form 
+  	  		@submit="sendMessage"
+  	  		class="full-width">
+	  	    <q-input
+	  	    	v-model="newMessage"
+	  	    	bg-color="white"
+	  	    	outlined
+	  	    	rounded
+	  	    	label="Message"
+	  	    	dense>
+
+	  	      <template v-slot:after>
+	  	        <q-btn
+	  	        	round
+	  	        	dense
+	  	        	flat
+	  	        	type="submit"
+	  	        	color="white"
+	  	        	icon="send" />
+	  	      </template>
+	  	    </q-input>
+  	  	</q-form>
+  	  </q-toolbar>
+  	</q-footer>
   </q-page>
 </template>
 
-<script lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
-import { defineComponent, ref } from 'vue';
-
-export default defineComponent({
-  name: 'IndexPage',
-  components: { ExampleComponent },
-  setup() {
-    const todos = ref<Todo[]>([
-      {
-        id: 1,
-        content: 'ct1'
-      },
-      {
-        id: 2,
-        content: 'ct2'
-      },
-      {
-        id: 3,
-        content: 'ct3'
-      },
-      {
-        id: 4,
-        content: 'ct4'
-      },
-      {
-        id: 5,
-        content: 'ct5'
-      }
-    ]);
-    const meta = ref<Meta>({
-      totalCount: 1200
-    });
-    return { todos, meta };
-  }
-});
+<script>
+	export default {
+	  data() {
+	  	return {
+	  		newMessage: '',
+	  		messages: [
+	  			{
+	  				text: 'Hey Jim, how are you?',
+	  				from: 'me'
+	  			},
+	  			{
+	  				text: 'Good thanks, Danny! How are you?',
+	  				from: 'them'
+	  			},
+	  			{
+	  				text: 'Pretty good!',
+	  				from: 'me'
+	  			}
+	  		]
+	  	}
+	  },
+	  methods: {
+	  	sendMessage() {
+	  		this.messages.push({
+	  			text: this.newMessage,
+	  			from: 'me'
+	  		})
+	  	}
+	  }
+	}
 </script>
+
+<style>
+</style>

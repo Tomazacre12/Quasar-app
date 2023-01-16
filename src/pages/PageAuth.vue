@@ -1,44 +1,47 @@
 <template>
-  <q-page class="flex">
-    <h5>Auth page</h5>
+  <q-page class="flex q-pa-md">
+  	<q-card class="full-width">
+      <q-tabs
+        v-model="tab"
+        dense
+        class="text-grey"
+        active-color="primary"
+        indicator-color="primary"
+        align="justify"
+        narrow-indicator
+      >
+        <q-tab name="login" label="Login" />
+        <q-tab name="register" label="Register" />
+      </q-tabs>
+
+      <q-separator />
+
+      <q-tab-panels v-model="tab" animated>
+        <q-tab-panel name="login">
+          <login-register :tab="tab" />
+        </q-tab-panel>
+
+        <q-tab-panel name="register">
+          <login-register :tab="tab" />
+        </q-tab-panel>
+
+      </q-tab-panels>
+    </q-card>
   </q-page>
 </template>
 
-<script lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
-import { defineComponent, ref } from 'vue';
-
-export default defineComponent({
-  name: 'IndexPage',
-  components: { ExampleComponent },
-  setup() {
-    const todos = ref<Todo[]>([
-      {
-        id: 1,
-        content: 'ct1'
-      },
-      {
-        id: 2,
-        content: 'ct2'
-      },
-      {
-        id: 3,
-        content: 'ct3'
-      },
-      {
-        id: 4,
-        content: 'ct4'
-      },
-      {
-        id: 5,
-        content: 'ct5'
-      }
-    ]);
-    const meta = ref<Meta>({
-      totalCount: 1200
-    });
-    return { todos, meta };
-  }
-});
+<script>
+	export default {
+	  data () {
+	    return {
+	      tab: 'login'
+	    }
+	  },
+	  components: {
+	  	'login-register' : require('components/LoginRegister.vue').default
+	  }
+	}
 </script>
+
+<style>
+</style>
